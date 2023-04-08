@@ -168,8 +168,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.047467496, y: -0.07917152}
-  m_Size: {x: 0.40509048, y: 0.5067317}
+  m_Offset: {x: 0.04746742, y: -0.07917153}
+  m_Size: {x: 0.45691064, y: 0.5067317}
   m_Direction: 0
 --- !u!212 &500075664
 SpriteRenderer:
@@ -231,8 +231,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500075661}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5636, y: 0.6736, z: 0}
-  m_LocalScale: {x: 2.37375, y: 2.371986, z: 1}
+  m_LocalPosition: {x: -1.6273, y: 0.6417, z: 0}
+  m_LocalScale: {x: 2.4587302, y: 2.4144444, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -325,7 +325,7 @@ Camera:
   m_GameObject: {fileID: 734773717}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
