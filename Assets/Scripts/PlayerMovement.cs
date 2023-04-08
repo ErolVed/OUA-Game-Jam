@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim = null;
     private bool isFacingRight = true; // Karakter sağa mı dönük?
     private bool isGrounded = false; //Karakter yerde mi?
+    private bool attacking = false, moving = false, jumping = false, falling = false;
 
     private void Awake()
     {
@@ -75,5 +76,27 @@ public class PlayerMovement : MonoBehaviour
         isFacingRight = !isFacingRight;
         transform.Rotate(0f, 180f, 0f);
     }
-
+    void Animation()
+    {
+        if (attacking)
+        {
+            anim.SetInteger("animNo", 4);
+        }
+        else if (moving && !jumping && !falling)
+        {
+            anim.SetInteger("animNo", 1);
+        }
+        else if (jumping)
+        {
+            anim.SetInteger("animNo", 2);
+        }
+        else if (falling)
+        {
+            anim.SetInteger("animNo", 3);
+        }
+        else
+        {
+            anim.SetInteger("animNo", 0);
+        }
+    }
 }
