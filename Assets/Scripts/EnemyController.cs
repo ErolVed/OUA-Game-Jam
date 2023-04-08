@@ -11,10 +11,13 @@ public class PatrolEnemyAI : MonoBehaviour
     private int currentPatrolPointIndex = 0; // Þu anki devriye noktasý
     private Rigidbody2D rb;
     private Vector2 movement;
+    Animator enemeyAnimator;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        enemyAnimator = GetComponent<enemeyAnimator>();
     }
 
     void Update()
