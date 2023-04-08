@@ -4,7 +4,7 @@ using System.Collections;
 public class DevriyeDusman : MonoBehaviour
 {
 
-    public float speed = 3f; // Düþmanýn hýzý
+    public float speed = 2f; // Düþmanýn hýzý
 
     private Transform target; // Hedef nesne
 
