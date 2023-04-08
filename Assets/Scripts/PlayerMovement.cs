@@ -17,13 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb = null;
     private Animator anim = null;
     private bool isFacingRight = true; // Karakter sağa mı dönük?
-    private bool isGrounded = false;
-    //private bool isGrounded()
-    //{
-    //    float extraHeightText = 0.1f;
-    //    RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, Vector2.down, extraHeightText, LayerMask.GetMask("Ground"));
-    //    return raycastHit.collider != null;
-    //}
+    private bool isGrounded = false; //Karakter yerde mi?
 
     private void Awake()
     {
@@ -35,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
         Jump();
+        CheckGround();
     }
 
     private void Move()
@@ -60,13 +55,25 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            isGrounded = false;
         }
     }
+    public void CheckGround()
+    {
+        float distance = 0.1f;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, distance, LayerMask.GetMask("Ground"));
+        if(hit != null)
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+    } //Karakterin yerde olup olmadığını kontrol etme
     private void Flip()
     {
         isFacingRight = !isFacingRight;
         transform.Rotate(0f, 180f, 0f);
-    }//Works
+    }
 
 }
