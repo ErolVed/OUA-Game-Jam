@@ -33,4 +33,8 @@ public class DevriyeDusman : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
 }
