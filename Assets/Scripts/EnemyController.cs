@@ -1,39 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
-public class PatrolEnemyAI : MonoBehaviour
+public class DevriyeDusman : MonoBehaviour
 {
-    public float moveSpeed = 2f; // Düþmanýn hareket hýzý
-    public float patrolRange = 5f; // Devriye gezme menzili
-    public Transform[] patrolPoints; // Devriye noktalarý
 
-    private int currentPatrolPointIndex = 0; // Þu anki devriye noktasý
-    private Rigidbody2D rb;
-    private Vector2 movement;
-    Animator enemeyAnimator;
+    public float speed = 3f; // Düþmanýn hýzý
 
+    private Transform target; // Hedef nesne
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        enemyAnimator = GetComponent<enemeyAnimator>();
+        target = GameObject.FindGameObjectWithTag("Player").transform; // Hedef nesneyi "Player" olarak etiketlemiþ bir nesne olarak tanýmlýyoruz.
     }
 
     void Update()
     {
-        // Düþman devriye noktasýna ulaþtýysa bir sonraki noktaya geç
-        if (Vector2.Distance(transform.position, patrolPoints[currentPatrolPointIndex].position) < 0.1f)
-        {
-            currentPatrolPointIndex = (currentPatrolPointIndex + 1) % patrolPoints.Length;
-        }
+        // Düþman karakterimizin hedefe doðru hareket etmesi için bir vektör oluþturuyoruz.
+        Vector3 direction = target.position - transform.position;
+        direction.Normalize();
 
-        // Düþman hareketi
-        movement = (patrolPoints[currentPatrolPointIndex].position - transform.position).normalized;
+        // Düþman karakterimizi hedefe doðru hareket ettiriyoruz.
+        transform.position += direction * speed * Time.deltaTime;
     }
 
-    void FixedUpdate()
+    // Karakterimiz temas halinde olduðunda ne olacaðýný belirliyoruz.
+    void OnCollisionEnter(Collision other)
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Oyuncu ile temas halinde");
+            // Oyuncuyu öldürme kodu
+            Destroy(other.gameObject);
+        }
     }
 }
