@@ -8,24 +8,25 @@ public class Enemy : MonoBehaviour
     public int damageAmount = 20; // Düþmanýn verdiði hasar miktarý
     public int health = 50; // Düþmanýn can puaný
     public float patrolDistance = 5f; // Düþmanýn devriye gezmesi için ileri gideceði mesafe
+    public float chaseDistance = 10f; // Düþmanýn oyuncuyu takip edeceði mesafe
     public Transform groundDetection; // Düþmanýn yere temas edip etmediðini kontrol etmek için kullanýlacak nokta
-    public float attackDistance = 1f; // Düþmanýn oyuncuya saldýrmak için yaklaþmasý gereken mesafe
-    public Transform target; // Düþmanýn hedef alacaðý nesne, burada oyuncu
 
     private Rigidbody2D rb;
     private bool movingRight = true;
+    private Transform playerTransform;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>(); // Düþmanýn Rigidbody bileþenine eriþir
+        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     void FixedUpdate()
     {
-        // Oyuncuya yaklaþmasý gereken mesafeye gelince ona doðru hareket eder
-        if (Vector2.Distance(transform.position, target.position) < attackDistance)
+        // Düþmanýn oyuncuya doðru yürümesini saðlar
+        if (Vector2.Distance(transform.position, playerTransform.position) <= chaseDistance)
         {
-            Attack(target.GetComponent<Player>());
+            transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, moveSpeed * Time.deltaTime);
         }
         else
         {
@@ -86,5 +87,7 @@ public class Enemy : MonoBehaviour
     {
         // Düþmanýn saldýrý animasyonunu çalýþtýrýr ve oyuncuya hasar verir
         // Burada saldýrý animasyonu ve saldýrý sýrasýnda alýnacak aksiyonlar yazýlabilir
+        player.TakeDamage(damageAmount);
     }
 }
+        
