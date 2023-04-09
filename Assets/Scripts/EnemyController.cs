@@ -86,4 +86,5 @@ public class Enemy : MonoBehaviour
     {
         // Düþmanýn saldýrý animasyonunu çalýþtýrýr ve oyuncuya hasar verir
         // Burada saldýrý animasyonu ve saldýrý sýrasýnda alýnacak aksiyonlar yazýlabilir
-        player.Take
+    }
+}
