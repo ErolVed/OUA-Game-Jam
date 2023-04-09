@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - HitBox
+  - Dead
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Player
   - 
   - 
   - 
@@ -41,4 +43,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackGround1
+    uniqueID: 802942875
+    locked: 0
+  - name: BackGround2
+    uniqueID: 477293721
+    locked: 0
+  - name: PlatformBack
+    uniqueID: 3169061395
+    locked: 0
+  - name: Platform
+    uniqueID: 648590339
+    locked: 0
+  - name: PlatformFront
+    uniqueID: 1102664789
     locked: 0

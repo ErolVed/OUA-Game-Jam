@@ -28,6 +28,7 @@ public class Movement : MonoBehaviour
         Attack();
         CheckOnAir();
         PauseWithKey();
+        Debug.Log(onAir);
     }
     void Move()
     {
@@ -129,6 +130,7 @@ public class Movement : MonoBehaviour
         if (rb.velocity.y != 0)
         {
             onAir = true;
+            Debug.Log("0");
         }
         RaycastHit2D hit1 = Physics2D.Raycast(transform.position + new Vector3(0, 1f, 0), transform.TransformDirection(Vector3.down), Mathf.Infinity, layerMask);
         RaycastHit2D hit2 = Physics2D.Raycast(transform.position - new Vector3(0.7f, -1, 0), transform.TransformDirection(Vector3.down), Mathf.Infinity, layerMask);
@@ -136,18 +138,22 @@ public class Movement : MonoBehaviour
         if (hit1.distance < 2.45)
         {
             onAir = false;
+            Debug.Log(hit1.distance);
         }
         else if (hit2.distance < 2.45)
         {
             onAir = false;
+            Debug.Log("2");
         }
         else if (hit3.distance < 2.45)
         {
             onAir = false;
+            Debug.Log("3");
         }
         else
         {
             onAir = true;
+            Debug.Log("hi!");
         }
     }
     private void OnTriggerEnter2D(Collider2D c)
