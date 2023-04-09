@@ -1,40 +1,89 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class olum : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
+    public float moveSpeed = 3f; // Düþmanýn hareket hýzý
+    public int damageAmount = 20; // Düþmanýn verdiði hasar miktarý
+    public int health = 50; // Düþmanýn can puaný
+    public float patrolDistance = 5f; // Düþmanýn devriye gezmesi için ileri gideceði mesafe
+    public Transform groundDetection; // Düþmanýn yere temas edip etmediðini kontrol etmek için kullanýlacak nokta
+    public float attackDistance = 1f; // Düþmanýn oyuncuya saldýrmak için yaklaþmasý gereken mesafe
+    public Transform target; // Düþmanýn hedef alacaðý nesne, burada oyuncu
 
-    public float speed = 2f; // Düþmanýn hýzý
-
-    private Transform target; // Hedef nesne
+    private Rigidbody2D rb;
+    private bool movingRight = true;
 
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform; // Hedef nesneyi "Player" olarak etiketlemiþ bir nesne olarak tanýmlýyoruz.
+        rb = GetComponent<Rigidbody2D>(); // Düþmanýn Rigidbody bileþenine eriþir
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        // Düþman karakterimizin hedefe doðru hareket etmesi için bir vektör oluþturuyoruz.
-        Vector3 direction = target.position - transform.position;
-        direction.Normalize();
-
-        // Düþman karakterimizi hedefe doðru hareket ettiriyoruz.
-        transform.position += direction * speed * Time.deltaTime;
-    }
-
-    // Karakterimiz temas halinde olduðunda ne olacaðýný belirliyoruz.
-    void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("Player"))
+        // Oyuncuya yaklaþmasý gereken mesafeye gelince ona doðru hareket eder
+        if (Vector2.Distance(transform.position, target.position) < attackDistance)
         {
-            Debug.Log("Oyuncu ile temas halinde");
-            // Oyuncuyu öldürme kodu
-            Destroy(other.gameObject);
+            Attack(target.GetComponent<Player>());
+        }
+        else
+        {
+            // Düþmanýn saða veya sola hareket etmesini saðlar
+            if (movingRight)
+            {
+                rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+            }
+            else
+            {
+                rb.velocity = new Vector2(-moveSpeed, rb.velocity.y);
+            }
+
+            // Düþmanýn devriye gezmesini saðlar
+            RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, 2f);
+            if (groundInfo.collider == false)
+            {
+                if (movingRight == true)
+                {
+                    transform.eulerAngles = new Vector3(0, -180, 0);
+                    movingRight = false;
+                }
+                else
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    movingRight = true;
+                }
+            }
         }
     }
-    private void Die()
+
+    void OnTriggerEnter2D(Collider2D other)
     {
+        // Eðer düþman oyuncuya çarparsa saldýrýr
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Attack(other.GetComponent<Player>());
+        }
+    }
+
+    public void TakeDamage(int amount)
+    {
+        // Düþmanýn can puanýný azaltýr ve ölüp ölmediðini kontrol eder
+        health -= amount;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        // Düþmanýn ölüm animasyonunu çalýþtýrýr ve nesneyi yok eder
         Destroy(gameObject);
     }
-}
+
+    public void Attack(Player player)
+    {
+        // Düþmanýn saldýrý animasyonunu çalýþtýrýr ve oyuncuya hasar verir
+        // Burada saldýrý animasyonu ve saldýrý sýrasýnda alýnacak aksiyonlar yazýlabilir
+        player.Take
