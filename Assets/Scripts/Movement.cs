@@ -23,6 +23,11 @@ public class Movement : MonoBehaviour
     bool moving = false, jumping = false, falling = false, attacking = false; //Animation States
     void Update()
     {
+        if (DialogueManager.isActive == true)
+        {
+            anim.SetInteger("animNo", 0);
+            return;
+        }
         Move();
         Animation();
         Attack();
