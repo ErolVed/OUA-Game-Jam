@@ -140,17 +140,17 @@ public class Movement : MonoBehaviour
         RaycastHit2D hit1 = Physics2D.Raycast(transform.position + new Vector3(0, 1f, 0), transform.TransformDirection(Vector3.down), Mathf.Infinity, layerMask);
         RaycastHit2D hit2 = Physics2D.Raycast(transform.position - new Vector3(0.7f, -1, 0), transform.TransformDirection(Vector3.down), Mathf.Infinity, layerMask);
         RaycastHit2D hit3 = Physics2D.Raycast(transform.position + new Vector3(0.7f, 1, 0), transform.TransformDirection(Vector3.down), Mathf.Infinity, layerMask);
-        if (hit1.distance < 2.45)
+        if (hit1.distance < 2.45 && hit1.distance != 0.0 )
         {
             onAir = false;
             Debug.Log(hit1.distance);
         }
-        else if (hit2.distance < 2.45)
+        else if (hit2.distance < 2.45 && hit1.distance != 0.0)
         {
             onAir = false;
             Debug.Log("2");
         }
-        else if (hit3.distance < 2.45)
+        else if (hit3.distance < 2.45 && hit1.distance != 0.0)
         {
             onAir = false;
             Debug.Log("3");
